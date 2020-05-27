@@ -28,7 +28,7 @@ def checking_sunked_ships(table):
 
 def convert_coordinates(coordinate):
     alphabet = {'A': 1, 'B': 2, 'C': 3, 'D': 4,
-                'E': 5, 'F': 6, 'G': 7, 'H': 8, 'I': 9}
+                'E': 5, 'F': 6, 'G': 7, 'H': 8, 'I': 9, 'J': 10}
     try:
         row = alphabet[coordinate[0].upper()]-1
         col = int(coordinate[1:])-1
@@ -232,7 +232,7 @@ def print_board(board1, board2, when='battle'):
     else:
         making_fancy(board1, when)
     making_fancy(board2, when)
-    alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
+    alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
     print('    Player1              Player2')
     for i in range(COLS):
         if i == COLS-1:
