@@ -105,10 +105,3 @@ E 0 0 0 0 0   E 0 0 S 0 0
 - There is no skeleton code for this project (on purpose), just an empty file.
   Try to create it from scratch, focus on features first, and refactor it at the end.
 
-## Starting repository
-
-Follow [this link](https://journey.code.cool/v2/project/team/blueprint/battleship/python) to create your project repository.
-
-## Background materials
-
-None
