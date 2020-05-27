@@ -92,13 +92,11 @@ def ai_placing_ships(board, ship, player):  # Mate
 
 
 def is_in_range(row, col, board):  # Mate
-    try:
-        if board[row][col] == 0:
-            return True
-        else:
-            return True
-    except IndexError:
+    if row in range(ROWS) and col in range(COLS):
+        return True
+    else:
         return False
+
 
 
 def make_a_shot(player, board):  # Tomi
