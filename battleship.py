@@ -11,12 +11,12 @@ def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
-def init_board(ROWS, COLS):  # Mate
+def init_board(ROWS, COLS):
     board = [[0 for _ in range(ROWS)] for _ in range(COLS)]
     return board
 
 
-def checking_sunked_ships(table):  # Mate
+def checking_sunked_ships(table):
     counter = 0
     for elements in table:
         counter += elements.count('S')
@@ -26,7 +26,7 @@ def checking_sunked_ships(table):  # Mate
         return False
 
 
-def convert_coordinates(coordinate):  # Mate
+def convert_coordinates(coordinate):
     alphabet = {'A': 1, 'B': 2, 'C': 3, 'D': 4,
                 'E': 5, 'F': 6, 'G': 7, 'H': 8, 'I': 9}
     try:
@@ -38,7 +38,7 @@ def convert_coordinates(coordinate):  # Mate
     return row, col
 
 
-def validate_input(board, use_for_what):  # Mate
+def validate_input(board, use_for_what):
     while True:
         coordinate = input('Please choose a coordinate !\n')
         if len(coordinate) < 2:
@@ -61,7 +61,7 @@ def validate_input(board, use_for_what):  # Mate
             print('That is not a coordinate')
 
 
-def ai_move(board):  # Mate
+def ai_move(board):
     while True:
         row = randint(0, ROWS-1)
         col = randint(0, COLS-1)
@@ -69,7 +69,7 @@ def ai_move(board):  # Mate
             return row, col
 
 
-def ai_placing_ships(board, ship, player):  # Mate
+def ai_placing_ships(board, ship, player):
     row, col = ai_move(board)
     if is_ship_around(row, col, board):
         ai_placing_ships(board, ship, player)
@@ -91,15 +91,14 @@ def ai_placing_ships(board, ship, player):  # Mate
     return board1, board2
 
 
-def is_in_range(row, col, board):  # Mate
+def is_in_range(row, col, board):
     if row in range(ROWS) and col in range(COLS):
         return True
     else:
         return False
 
 
-
-def make_a_shot(player, board):  # Tomi
+def make_a_shot(player, board):
     print('player ', player, 'turn to shot')
     if player == 'AI':
         row, col = ai_move(board)
@@ -149,7 +148,7 @@ def print_action(marked_cell):
     time.sleep(0.8)
 
 
-def mark(board, row, col, marked_cell):  # Gyöngyi
+def mark(board, row, col, marked_cell):
     if marked_cell == 'ship':
         board[row][col] = 'X'
     elif marked_cell == 'missed':
@@ -162,14 +161,14 @@ def mark(board, row, col, marked_cell):  # Gyöngyi
         print('sthg')
 
 
-def check_position_is_available(board, row, col):  # Gyöngyi
+def check_position_is_available(board, row, col):
     if board[row][col] == 0:
         return True
     else:
         return False
 
 
-def has_won(table1, table2):  # Mate
+def has_won(table1, table2):
     if checking_sunked_ships(table1) is True:
         winner = 2
         print('Player ', winner, ' wins!')
@@ -286,7 +285,7 @@ def is_ship_around(row, col, board):
     return False
 
 
-def placing_ships(board, ship, player):  # Mate
+def placing_ships(board, ship, player):
     if player == 'AI':
         ai_placing_ships(board, ship, player)
         return True
@@ -323,7 +322,7 @@ def placing_ships(board, ship, player):  # Mate
     return board1, board2
 
 
-def battleship_game(board1, board2):  # Mate
+def battleship_game(board1, board2):
     print_board(board1, board2)
     play_type = input('1. Single player, 2. Multiplayer\n')
     turn_limit = int(input(' please choose a turn limit between 5-50\n'))
