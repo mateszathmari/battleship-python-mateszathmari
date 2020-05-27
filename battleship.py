@@ -123,19 +123,13 @@ def make_a_shot(player, board):
 
 
 def where_is_the_hole(row, col, board):
-    alist = [1, -1]
-    for i in alist:
-        try:
-            if board[row+i][col] == 'H':
-                return row+i, col
-        except IndexError:
-            pass
-    for i in alist:
-        try:
-            if board[row][col+i] == 'H':
-                return row, col+i
-        except IndexError:
-            pass
+    plus_minus = [1, -1]
+    for i in plus_minus:
+        if is_in_range(row+i, col, board) and board[row+i][col] == 'H':
+            return row+i, col
+        elif is_in_range(row, col+i, board) and board[row][col+i] == 'H':
+            return row, col+i
+
 
 
 def print_action(marked_cell):
