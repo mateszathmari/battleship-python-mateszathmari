@@ -269,19 +269,12 @@ def print_board(board1, board2, when='battle'):
 
 
 def is_ship_around(row, col, board):
-    alist = [1, -1]
-    for i in alist:
-        try:
-            if board[row+i][col] == 'X':
-                return True
-        except IndexError:
-            pass
-    for i in alist:
-        try:
-            if board[row][col+i] == 'X':
-                return True
-        except IndexError:
-            pass
+    plus_minus = [1, -1]
+    for i in plus_minus:
+        if is_in_range(row+i, col, board) and board[row+i][col] == 'X':
+            return True
+        elif is_in_range(row, col+i, board) and board[row][col+i] == 'X':
+            return True
     return False
 
 
