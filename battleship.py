@@ -178,53 +178,6 @@ def has_won(table1, table2):
         return False
 
 
-# def making_fancy(board, when):
-#     for row in range(ROWS):
-#         for col in range(COLS):
-#             if board[row][col] == 'X':
-#                 if when == 'placing':
-#                     board[row][col] = '🚢'
-#                 else:
-#                     board[row][col] = '🌊'
-#             elif board[row][col] == 0:
-#                 board[row][col] = '🌊'
-#             elif board[row][col] == 'S':
-#                 board[row][col] = '💨'
-#             elif board[row][col] == 'H':
-#                 board[row][col] = '🔥'
-#             elif board[row][col] == 'M':
-#                 board[row][col] = '⛔'
-
-
-def tracing_ships_places(board):
-    ship_places = []
-    for row in range(ROWS):
-        for col in range(COLS):
-            if board[row][col] == 'X':
-                ship_places.append([row, col])
-    return ship_places
-
-
-def placing_ships_back(board, ship_places):
-    for element in ship_places:
-        board[element[0]][element[1]] = 'X'
-
-
-def making_normal(board):
-    for row in range(ROWS):
-        for col in range(COLS):
-            if board[row][col] == '🚢':
-                board[row][col] = 'X'
-            elif board[row][col] == '🌊':
-                board[row][col] = 0
-            elif board[row][col] == '💨':
-                board[row][col] = 'S'
-            elif board[row][col] == '🔥':
-                board[row][col] = 'H'
-            elif board[row][col] == '⛔':
-                board[row][col] = 'M'
-
-
 def making_fancy(element):
     for row in range(ROWS):
         for col in range(COLS):
@@ -265,13 +218,6 @@ def hide_ships(element, when):
 
 def print_board(board1, board2, when='battle'):
     clear()
-    # ship_places1 = tracing_ships_places(board1)
-    # ship_places2 = tracing_ships_places(board2)
-    # if len(ship_places1) > 2:
-    #     making_fancy(board1, 'battle')
-    # else:
-    #     making_fancy(board1, when)
-    # making_fancy(board2, when)
     alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
     print('    Player1              Player2')
     for i in range(COLS):
@@ -297,10 +243,6 @@ def print_board(board1, board2, when='battle'):
         for element in line2:
             print(hide_ships(making_fancy(element), when), end='  ')
     print('\n')
-    # placing_ships_back(board1, ship_places1)
-    # placing_ships_back(board2, ship_places2)
-    # making_normal(board1)
-    # making_normal(board2)
 
 
 def is_ship_around(row, col, board):
