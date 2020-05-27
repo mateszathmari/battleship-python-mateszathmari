@@ -71,20 +71,21 @@ def ai_move(board):
 
 def ai_placing_ships(board, ship, player):
     row, col = ai_move(board)
+    players_ship = 'ship2'
     if is_ship_around(row, col, board):
         ai_placing_ships(board, ship, player)
     elif ship == 1:
-        mark(board, row, col, 'ship')
+        mark(board, row, col, players_ship)
     else:
         direction = randint(0, 1)
         try:
             if direction == 0:
-                mark(board, row, col+1, 'ship')
-                mark(board, row, col, 'ship')
+                mark(board, row, col+1, players_ship)
+                mark(board, row, col, players_ship)
 
             elif direction == 1:
-                mark(board, row+1, col, 'ship')
-                mark(board, row, col, 'ship')
+                mark(board, row+1, col, players_ship)
+                mark(board, row, col, players_ship)
         except IndexError:
             ai_placing_ships(board, ship, player)
     print_board(board1, board2)
@@ -131,7 +132,6 @@ def where_is_the_hole(row, col, board):
             return row, col+i
 
 
-
 def print_action(marked_cell):
     if marked_cell == 'missed':
         print('You`ve missed!')
@@ -143,8 +143,10 @@ def print_action(marked_cell):
 
 
 def mark(board, row, col, marked_cell):
-    if marked_cell == 'ship':
+    if marked_cell == 'ship1':
         board[row][col] = 'X'
+    elif marked_cell == 'ship2':
+        board[row][col] = 'Y'
     elif marked_cell == 'missed':
         board[row][col] = 'M'
     elif marked_cell == 'hit':
@@ -176,22 +178,22 @@ def has_won(table1, table2):
         return False
 
 
-def making_fancy(board, when):
-    for row in range(ROWS):
-        for col in range(COLS):
-            if board[row][col] == 'X':
-                if when == 'placing':
-                    board[row][col] = '🚢'
-                else:
-                    board[row][col] = '🌊'
-            elif board[row][col] == 0:
-                board[row][col] = '🌊'
-            elif board[row][col] == 'S':
-                board[row][col] = '💨'
-            elif board[row][col] == 'H':
-                board[row][col] = '🔥'
-            elif board[row][col] == 'M':
-                board[row][col] = '⛔'
+# def making_fancy(board, when):
+#     for row in range(ROWS):
+#         for col in range(COLS):
+#             if board[row][col] == 'X':
+#                 if when == 'placing':
+#                     board[row][col] = '🚢'
+#                 else:
+#                     board[row][col] = '🌊'
+#             elif board[row][col] == 0:
+#                 board[row][col] = '🌊'
+#             elif board[row][col] == 'S':
+#                 board[row][col] = '💨'
+#             elif board[row][col] == 'H':
+#                 board[row][col] = '🔥'
+#             elif board[row][col] == 'M':
+#                 board[row][col] = '⛔'
 
 
 def tracing_ships_places(board):
@@ -223,15 +225,53 @@ def making_normal(board):
                 board[row][col] = 'M'
 
 
+def making_fancy(element):
+    for row in range(ROWS):
+        for col in range(COLS):
+            if element == 'X':
+                return '🚢'
+            elif element == 'Y':
+                return '⛵'
+            elif element == 0:
+                return '🌊'
+            elif element == 'S':
+                return '💨'
+            elif element == 'H':
+                return '🔥'
+            elif element == 'M':
+                return '⛔'
+
+
+def hide_ships(element, when):
+    if when == 'placing2':
+        for row in range(ROWS):
+            for col in range(COLS):
+                if element == '🚢':
+                    element = '🌊'
+    elif when == 'placing1':
+        for row in range(ROWS):
+            for col in range(COLS):
+                if element == '⛵':
+                    element = '🌊'
+    else:
+        for row in range(ROWS):
+            for col in range(COLS):
+                if element == '🚢':
+                    element = '🌊'
+                elif element == '⛵':
+                    element = '🌊'
+    return element
+
+
 def print_board(board1, board2, when='battle'):
     clear()
-    ship_places1 = tracing_ships_places(board1)
-    ship_places2 = tracing_ships_places(board2)
-    if len(ship_places1) > 2:
-        making_fancy(board1, 'battle')
-    else:
-        making_fancy(board1, when)
-    making_fancy(board2, when)
+    # ship_places1 = tracing_ships_places(board1)
+    # ship_places2 = tracing_ships_places(board2)
+    # if len(ship_places1) > 2:
+    #     making_fancy(board1, 'battle')
+    # else:
+    #     making_fancy(board1, when)
+    # making_fancy(board2, when)
     alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
     print('    Player1              Player2')
     for i in range(COLS):
@@ -250,16 +290,17 @@ def print_board(board1, board2, when='battle'):
         print('\n'+letter, end=' ')
         for element, i in zip(line1, range(COLS)):
             if i == COLS-1:
-                print(element, end='    '+letter+' ')
+                print(hide_ships(making_fancy(element), when),
+                      end='    '+letter+' ')
             else:
-                print(element, end='  ')
+                print(hide_ships(making_fancy(element), when), end='  ')
         for element in line2:
-            print(element, end='  ')
+            print(hide_ships(making_fancy(element), when), end='  ')
     print('\n')
-    placing_ships_back(board1, ship_places1)
-    placing_ships_back(board2, ship_places2)
-    making_normal(board1)
-    making_normal(board2)
+    # placing_ships_back(board1, ship_places1)
+    # placing_ships_back(board2, ship_places2)
+    # making_normal(board1)
+    # making_normal(board2)
 
 
 def is_ship_around(row, col, board):
@@ -275,7 +316,12 @@ def is_ship_around(row, col, board):
 def placing_ships(board, ship, player):
     if player == 'AI':
         ai_placing_ships(board, ship, player)
+        players_ship = 'ship2'
         return True
+    elif player == 1:
+        players_ship = 'ship1'
+    else:
+        players_ship = 'ship2'
     print('player ', player, 'turn')
     print('placing ship:', ship)
     row, col = validate_input(board, 'placing_ships')
@@ -283,29 +329,31 @@ def placing_ships(board, ship, player):
         print('Ships are too close')
         placing_ships(board, 2, player)
     elif ship == 1:
-        board[row][col] = 'X'
+        mark(board, row, col, players_ship)
     else:
         direction = input('Please choose a direction v or h !')
         try:
             if direction.upper() == 'H':
-                mark(board, row, col+1, 'ship')
-                mark(board, row, col, 'ship')
+                mark(board, row, col+1, players_ship)
+                mark(board, row, col, players_ship)
                 if player == 1:
                     clear()
                     input('Next player`s placement phase press enter to continue')
+                    player += 1
 
             elif direction.upper() == 'V':
-                mark(board, row+1, col, 'ship')
-                mark(board, row, col, 'ship')
+                mark(board, row+1, col, players_ship)
+                mark(board, row, col, players_ship)
                 if player == 1:
                     clear()
                     input('Next player`s placement phase press enter to continue')
+                    player += 1
             else:
                 print('v or h !')
         except IndexError:
             print('too close to edge')
             placing_ships(board, 2, player)
-    print_board(board1, board2, 'placing')
+    print_board(board1, board2, f'placing{player}')
     return board1, board2
 
 
