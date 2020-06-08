@@ -219,7 +219,7 @@ def hide_ships(element, when):
 def print_board(board1, board2, when='battle'):
     clear()
     alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
-    print('    Player1              Player2')
+    print('    Player1               Player2')
     for i in range(COLS):
         if i == COLS-1:
             print(i+1, end='    ')
